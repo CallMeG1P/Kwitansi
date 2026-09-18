@@ -487,7 +487,7 @@
   }
 
   /* LOGIN & LOGIKA PROTEKSI KETAT ROLE */
-  async function handleLogin() {
+async function handleLogin() {
     const u = document.getElementById('loginUsername').value;
     const p = document.getElementById('loginPassword').value;
 
@@ -505,24 +505,27 @@
         document.getElementById('userDisplayName').innerText = user.name;
         document.getElementById('userRole').innerText = user.role.toUpperCase();
 
+        // 1. Sembunyikan form login & tampilkan dashboard
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
 
-        // Pengecekan Role Kebal Huruf Kapital/Kecil
+        // 2. Wajib: Bersihkan dan sembunyikan semua form input yang mungkin terbuka sebelumnya
+        hideForms();
+
+        // 3. Pengecekan Role Kebal Kapital
         const userRoleClean = String(user.role || '').trim().toLowerCase();
         const isAdmin = userRoleClean === 'admin';
 
+        // 4. Atur visibilitas tombol berdasarkan role secara tegas
+        const btnUser = document.getElementById('btnTambahUser');
+        const btnKwitansi = document.getElementById('btnTambahKwitansi');
+
         if (isAdmin) {
-          // Buka tombol hanya jika terbukti Admin
-          document.getElementById('btnTambahUser').classList.remove('hidden');
-          document.getElementById('btnTambahKwitansi').classList.remove('hidden');
+          btnUser.classList.remove('hidden');
+          btnKwitansi.classList.remove('hidden');
         } else {
-          // Kunci rapat jika Client
-          document.getElementById('btnTambahUser').classList.add('hidden');
-          document.getElementById('btnTambahKwitansi').classList.add('hidden');
-          
-          // Kembalikan ke tampilan list utama jika form sempat terbuka
-          hideForms();
+          btnUser.classList.add('hidden');
+          btnKwitansi.classList.add('hidden');
         }
 
         await loadKwitansiData();
