@@ -1,7 +1,7 @@
 import type { User, KwitansiData, KwitansiType } from './types';
 
 // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9GG3gBZ4VMl-e2Hu1_Qv3UtREHo_DA6vSNfeqBpv2RDfMTVq-NjoJUmWT4LGvK2Az.exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaRYAt2tXj3egjbzFRuduIpFbUuT5SdUML-x8ZSkyyCXZqD3hvR0dC0qZbjq7lQT_r/exec';
 
 async function apiGet<T>(action: string): Promise<T> {
   const res = await fetch(`${SCRIPT_URL}?action=${action}`);
