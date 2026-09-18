@@ -486,7 +486,7 @@
     document.getElementById('fieldTerbilang').value = konversiTerbilangLengkap(jumlah);
   }
 
-  /* LOGIN & LOGOUT */
+/* LOGIN & PROTEKSI HAK AKSES ROLE */
   async function handleLogin() {
     const u = document.getElementById('loginUsername').value;
     const p = document.getElementById('loginPassword').value;
@@ -508,10 +508,12 @@
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
 
-        if(user.role === 'admin') {
-          document.getElementById('btnTambahUser').classList.remove('hidden');
-          document.getElementById('btnTambahKwitansi').classList.remove('hidden');
-        }
+        // PENGECEKAN HAK AKSES ROLE
+        const isAdmin = user.role.toLowerCase() === 'admin';
+
+        // Hanya Tampilkan Tombol jika Admin, Sembunyikan jika Client
+        document.getElementById('btnTambahUser').classList.toggle('hidden', !isAdmin);
+        document.getElementById('btnTambahKwitansi').classList.toggle('hidden', !isAdmin);
 
         await loadKwitansiData();
       } else {
