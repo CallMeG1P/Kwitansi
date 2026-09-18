@@ -67,6 +67,7 @@
   h4 { font-size: 1rem; text-transform: none; color: var(--text); margin-bottom: 2px; }
   .subtle { color: var(--text-muted); font-size: 0.85rem; }
 
+  /* KUNCI UTAMA: Class hidden menyembunyikan elemen secara absolut */
   .hidden { display: none !important; }
 
   /* FORM */
@@ -202,7 +203,7 @@
     <span id="globalLoadingText">Memproses data...</span>
   </div>
 
-  <!-- LOGIN -->
+  <!-- LOGIN SECTION -->
   <div id="loginSection">
     <div class="brand" style="margin-bottom:22px;">
       <div class="brand-mark">K</div>
@@ -224,7 +225,7 @@
     </button>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- DASHBOARD SECTION -->
   <div id="dashboardSection" class="hidden">
     <div class="header-bar no-print">
       <div class="brand">
@@ -241,13 +242,15 @@
           <button type="button" class="swatch swatch-stone" data-theme-choice="stone" title="Stone"></button>
           <button type="button" class="swatch swatch-slate" data-theme-choice="slate" title="Slate"></button>
         </div>
+        
+        <!-- PENTING: Tombol Diberi Class 'hidden' Sejak Awal -->
         <button id="btnTambahUser" class="hidden btn-secondary btn-auto" onclick="showFormUser()">+ Akun Baru</button>
         <button id="btnTambahKwitansi" class="hidden btn-auto" onclick="showFormKwitansi()">+ Buat Kwitansi</button>
         <button class="btn-danger btn-auto" onclick="handleLogout()">Logout</button>
       </div>
     </div>
 
-    <!-- LIST -->
+    <!-- LIST SECTION -->
     <div id="listSection" class="no-print">
       <h4>Daftar Kwitansi Pembayaran</h4>
       <div class="toolbar">
@@ -262,7 +265,7 @@
       <div id="kwitansiListTable"></div>
     </div>
 
-    <!-- FORM USER -->
+    <!-- FORM USER (Khusus Admin) -->
     <div id="formUserSection" class="hidden no-print">
       <h4>Buat Akun Baru</h4>
       <div class="form-grid">
@@ -280,10 +283,10 @@
       </div>
     </div>
 
-    <!-- FORM INPUT KWITANSI -->
+    <!-- FORM INPUT KWITANSI (Khusus Admin) -->
     <div id="formKwitansiSection" class="hidden no-print">
       <h4>Tambah Kwitansi Baru</h4>
-      <p class="subtle" style="margin-bottom:16px;">Semua input manual. Terbilang dihitung otomatis dari Total Keuntungan / Jumlah.</p>
+      <p class="subtle" style="margin-bottom:16px;">Isi rincian transaksi, kalkulasi akan terisi otomatis.</p>
 
       <div class="form-group" style="max-width:260px;">
         <label>Tipe Kwitansi</label>
@@ -330,7 +333,7 @@
 
       <!-- Terbilang Otomatis -->
       <div class="form-group">
-        <label>Terbilang (Otomatis dari Jumlah 30%)</label>
+        <label>Terbilang (Otomatis dari Total Keuntungan)</label>
         <input type="text" id="fieldTerbilang" readonly style="font-weight:600; background:var(--surface-2);">
       </div>
 
@@ -340,7 +343,7 @@
       </div>
     </div>
 
-    <!-- PREVIEW -->
+    <!-- PREVIEW KWITANSI -->
     <div id="previewArea" class="hidden">
       <div class="preview-actions no-print" style="margin-bottom:16px; display:flex; gap:8px;">
         <button class="btn-success btn-auto" onclick="window.print()">Cetak / Download PDF</button>
@@ -388,9 +391,10 @@
 </div>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9GG3gBZ4VMl-e2Hu1_Qv3UtREHo_DA6vSNfeqBpv2RDfMTVq-NjoJUmWT4LGvK2Az/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9GG3gBZ4VMl-e2Hu1_Qv3UtREHu1_DA6vSNfeqBpv2RDfMTVq-NjoJUmWT4LGvK2Az/exec";
   let currentUser = null;
 
+  /* THEME SYSTEM */
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     try { localStorage.setItem('kwitansi_theme', theme); } catch (e) {}
@@ -427,7 +431,7 @@
     document.getElementById('globalLoading').classList.add('hidden');
   }
 
-  /* FUNGSI TERBILANG DENGAN SANGAT AKURAT (Mendukung Minus) */
+  /* TERBILANG AKURAT (Mendukung Minus & Perak) */
   function terbilangAngkaDasar(angka) {
     var bil = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
     angka = Math.floor(angka);
@@ -469,15 +473,11 @@
     return hasil.replace(/\s+/g, ' ').trim();
   }
 
-  /* LOGIKA EDIT MANUAL & OTOMATISASI TERBILANG */
+  /* KALKULASI OTOMATIS */
   function updateTerbilangDanJumlah() {
     const totalKeuntungan = parseFloat(document.getElementById('fieldTotalKeuntungan').value) || 0;
-    
-    // Hitung 30% dari Total Keuntungan yang diinput manual
     const jumlah30 = totalKeuntungan * 0.30;
     document.getElementById('fieldJumlah').value = jumlah30 ? jumlah30.toFixed(2) : 0;
-    
-    // Jalankan Terbilang dari nilai 30% tersebut
     document.getElementById('fieldTerbilang').value = konversiTerbilangLengkap(jumlah30);
   }
 
@@ -486,7 +486,7 @@
     document.getElementById('fieldTerbilang').value = konversiTerbilangLengkap(jumlah);
   }
 
-/* LOGIN & PROTEKSI HAK AKSES ROLE */
+  /* LOGIN & LOGIKA PROTEKSI KETAT ROLE */
   async function handleLogin() {
     const u = document.getElementById('loginUsername').value;
     const p = document.getElementById('loginPassword').value;
@@ -508,12 +508,22 @@
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
 
-        // PENGECEKAN HAK AKSES ROLE
-        const isAdmin = user.role.toLowerCase() === 'admin';
+        // Pengecekan Role Kebal Huruf Kapital/Kecil
+        const userRoleClean = String(user.role || '').trim().toLowerCase();
+        const isAdmin = userRoleClean === 'admin';
 
-        // Hanya Tampilkan Tombol jika Admin, Sembunyikan jika Client
-        document.getElementById('btnTambahUser').classList.toggle('hidden', !isAdmin);
-        document.getElementById('btnTambahKwitansi').classList.toggle('hidden', !isAdmin);
+        if (isAdmin) {
+          // Buka tombol hanya jika terbukti Admin
+          document.getElementById('btnTambahUser').classList.remove('hidden');
+          document.getElementById('btnTambahKwitansi').classList.remove('hidden');
+        } else {
+          // Kunci rapat jika Client
+          document.getElementById('btnTambahUser').classList.add('hidden');
+          document.getElementById('btnTambahKwitansi').classList.add('hidden');
+          
+          // Kembalikan ke tampilan list utama jika form sempat terbuka
+          hideForms();
+        }
 
         await loadKwitansiData();
       } else {
@@ -537,12 +547,22 @@
   }
 
   function showFormUser() {
+    const userRoleClean = String(currentUser?.role || '').trim().toLowerCase();
+    if (userRoleClean !== 'admin') {
+      alert("Akses ditolak! Hanya Admin yang dapat membuat akun.");
+      return;
+    }
     hideForms();
     document.getElementById('listSection').classList.add('hidden');
     document.getElementById('formUserSection').classList.remove('hidden');
   }
 
   function showFormKwitansi() {
+    const userRoleClean = String(currentUser?.role || '').trim().toLowerCase();
+    if (userRoleClean !== 'admin') {
+      alert("Akses ditolak! Hanya Admin yang dapat membuat kwitansi.");
+      return;
+    }
     hideForms();
     document.getElementById('listSection').classList.add('hidden');
     document.getElementById('formKwitansiSection').classList.remove('hidden');
@@ -563,7 +583,7 @@
     return "Rp" + new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(val || 0);
   }
 
-  /* DATABASE LOAD & SAVE */
+  /* MEMUAT DATA DATABASE */
   async function loadKwitansiData() {
     const type = document.getElementById('filterType').value;
     const action = type === 'lebur' ? 'getKwitansiLebur' : 'getKwitansiTakLebur';
@@ -589,6 +609,9 @@
       if(data.length === 0) {
         html += `<tr><td colspan="5" style="text-align:center; padding:20px;">Belum ada data kwitansi.</td></tr>`;
       } else {
+        const userRoleClean = String(currentUser?.role || '').trim().toLowerCase();
+        const isAdmin = userRoleClean === 'admin';
+
         data.forEach(row => {
           html += `<tr>
             <td>${row.no || '-'}</td>
@@ -598,7 +621,7 @@
             <td>
               <div class="row-actions">
                 <button class="btn-secondary btn-sm" onclick='viewKwitansi(${JSON.stringify(row)}, "${type}")'>Cetak / Lihat</button>
-                ${currentUser.role === 'admin' ? `<button class="btn-danger btn-sm" onclick='hapusKwitansi("${row.id}", "${type}")'>Hapus</button>` : ''}
+                ${isAdmin ? `<button class="btn-danger btn-sm" onclick='hapusKwitansi("${row.id}", "${type}")'>Hapus</button>` : ''}
               </div>
             </td>
           </tr>`;
