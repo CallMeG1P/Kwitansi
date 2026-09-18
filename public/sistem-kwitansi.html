@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <script>
-  /* Terapkan tema tersimpan sebelum render agar tidak ada "kedipan" warna */
   (function () {
     try {
       var t = localStorage.getItem('kwitansi_theme') || 'onyx';
@@ -17,7 +16,6 @@
   })();
 </script>
 <style>
-  /* ============ DESIGN TOKENS (monokrom) ============ */
   :root[data-theme="onyx"] {
     --bg: #fafafa; --surface: #ffffff; --surface-2: #f4f4f5;
     --text: #18181b; --text-muted: #71717a; --border: #e4e4e7;
@@ -67,12 +65,11 @@
   h2 { font-size: 1.4rem; }
   h3 { font-size: 1.05rem; font-weight: 500; }
   h4 { font-size: 1rem; text-transform: none; color: var(--text); margin-bottom: 2px; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
   .subtle { color: var(--text-muted); font-size: 0.85rem; }
 
   .hidden { display: none !important; }
 
-  /* ============ FORM ============ */
+  /* FORM */
   .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
   .form-group { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
   label { font-weight: 500; font-size: 0.82rem; color: var(--text-muted); }
@@ -93,9 +90,8 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
   }
   input[readonly] { background: var(--surface-2); color: var(--text-muted); }
-  input::placeholder { color: var(--text-muted); opacity: .7; }
 
-  /* ============ BUTTONS ============ */
+  /* BUTTONS */
   button {
     padding: 10px 16px;
     border: 1px solid var(--accent);
@@ -117,18 +113,14 @@
   button:active { transform: translateY(1px); }
   button:disabled { opacity: .5; cursor: not-allowed; }
 
-  button.btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--border);
-  }
+  button.btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
   button.btn-danger { background: var(--danger); border-color: var(--danger); color: var(--danger-contrast); }
   button.btn-success { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
   button.btn-auto { width: auto; padding: 9px 14px; }
   button.btn-sm { width: auto; padding: 6px 10px; font-size: 12.5px; }
 
-  /* ============ SPINNER ============ */
-  .spinner { width: 14px; height: 14px; border: 2px solid currentColor; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 0.8s linear infinite; opacity: .85; }
+  /* SPINNER */
+  .spinner { width: 14px; height: 14px; border: 2px solid currentColor; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 0.8s linear infinite; }
   @keyframes rotation { to { transform: rotate(360deg); } }
 
   .loading-overlay {
@@ -139,9 +131,8 @@
     z-index: 1000; border-radius: 14px; gap: 10px;
   }
   .big-spinner { width: 34px; height: 34px; border: 3px solid var(--accent); border-bottom-color: transparent; border-radius: 50%; animation: rotation 0.8s linear infinite; }
-  #globalLoadingText { font-size: 0.85rem; color: var(--text-muted); }
 
-  /* ============ HEADER ============ */
+  /* HEADER */
   .header-bar {
     display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center;
     border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px;
@@ -149,25 +140,22 @@
   .brand { display: flex; align-items: center; gap: 10px; }
   .brand-mark {
     width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: var(--accent-contrast);
-    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px;
   }
   .nav-btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
-  /* Theme swatches */
   .theme-picker { display: flex; gap: 6px; align-items: center; margin-right: 4px; }
   .swatch {
     width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
-    border: 1px solid var(--border); box-shadow: 0 0 0 0 transparent; padding: 0;
-    transition: transform .1s ease, box-shadow .15s ease;
+    border: 1px solid var(--border); padding: 0;
   }
-  .swatch:hover { transform: scale(1.08); }
   .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
   .swatch-onyx { background: linear-gradient(135deg,#fafafa 50%,#18181b 50%); }
   .swatch-graphite { background: linear-gradient(135deg,#3f3f46 50%,#0e0e10 50%); }
   .swatch-stone { background: linear-gradient(135deg,#f6f4f1 50%,#8a8378 50%); }
   .swatch-slate { background: linear-gradient(135deg,#e9eaed 50%,#23262b 50%); }
 
-  /* ============ LIST / TABLE ============ */
+  /* TABLE */
   .toolbar { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; margin-bottom: 16px; }
   .toolbar .form-group { margin-bottom: 0; min-width: 180px; }
 
@@ -179,24 +167,12 @@
     padding: 10px 14px; border-bottom: 1px solid var(--border);
   }
   table.data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: middle; }
-  table.data-table tbody tr:last-child td { border-bottom: none; }
   table.data-table tbody tr:hover { background: var(--surface-2); }
   .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-  .empty-state { text-align: center; padding: 32px 14px; color: var(--text-muted); font-size: 0.9rem; }
 
-  @media (max-width: 640px) {
-    table.data-table thead { display: none; }
-    table.data-table, table.data-table tbody, table.data-table tr, table.data-table td { display: block; width: 100%; }
-    table.data-table tr { border-bottom: 1px solid var(--border); padding: 10px 4px; }
-    table.data-table td { border: none; padding: 4px 10px; display: flex; justify-content: space-between; gap: 10px; text-align: right; }
-    table.data-table td::before { content: attr(data-label); font-weight: 600; color: var(--text-muted); text-align: left; }
-    table.data-table td.row-actions-cell { justify-content: flex-end; }
-    table.data-table td.row-actions-cell::before { content: none; }
-  }
-
-  /* ============ KWITANSI (RECEIPT) ============ */
+  /* RECEIPT */
   .kwitansi-box { border: 1.5px solid var(--text); border-radius: 10px; overflow: hidden; background: var(--surface); margin-top: 6px; }
-  .kwitansi-title { background: var(--accent); color: var(--accent-contrast); text-align: center; font-size: 18px; font-weight: 700; padding: 12px; letter-spacing: .01em; }
+  .kwitansi-title { background: var(--accent); color: var(--accent-contrast); text-align: center; font-size: 18px; font-weight: 700; padding: 12px; }
   .kwitansi-subtitle { text-align: center; font-size: 12.5px; color: var(--text-muted); border-bottom: 1px solid var(--border); padding: 6px; }
 
   table.kwitansi-table { width: 100%; border-collapse: collapse; }
@@ -208,22 +184,12 @@
   .sig-box { flex: 1 1 150px; border-right: 1px solid var(--border); min-height: 100px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; padding: 10px; font-size: 13px; }
   .sig-box:last-child { border-right: none; }
 
-  .preview-actions { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-
-  /* ============ MISC ============ */
-  .welcome-name { font-weight: 600; }
-  .role-badge {
-    display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: .03em;
-    padding: 2px 8px; border-radius: 20px; background: var(--surface-2); color: var(--text-muted); margin-left: 6px; font-weight: 600;
-  }
-
   @media print {
     body { background: #fff !important; padding: 0; color: #000; }
     .no-print { display: none !important; }
-    .container { border: none; border-radius: 0; padding: 0; max-width: 100%; }
-    .kwitansi-box { border: 2px solid #000 !important; border-radius: 0; page-break-inside: avoid; }
-    .kwitansi-title { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    table.kwitansi-table td, table.kwitansi-table th, .signature-container, .sig-box { border-color: #000 !important; }
+    .container { border: none; padding: 0; max-width: 100%; }
+    .kwitansi-box { border: 2px solid #000 !important; }
+    .kwitansi-title { background: #000 !important; color: #fff !important; }
   }
 </style>
 </head>
@@ -231,13 +197,12 @@
 
 <div class="container">
 
-  <!-- OVERLAY LOADING GLOBAL -->
   <div id="globalLoading" class="loading-overlay hidden">
     <div class="big-spinner"></div>
     <span id="globalLoadingText">Memproses data...</span>
   </div>
 
-  <!-- 1. HALAMAN LOGIN -->
+  <!-- LOGIN -->
   <div id="loginSection">
     <div class="brand" style="margin-bottom:22px;">
       <div class="brand-mark">K</div>
@@ -259,22 +224,22 @@
     </button>
   </div>
 
-  <!-- 2. DASHBOARD UTAMA -->
+  <!-- DASHBOARD -->
   <div id="dashboardSection" class="hidden">
     <div class="header-bar no-print">
       <div class="brand">
         <div class="brand-mark">K</div>
         <div>
-          <h3>Selamat datang, <span id="userDisplayName" class="welcome-name"></span></h3>
-          <span id="userRole" class="role-badge"></span>
+          <h3>Selamat datang, <span id="userDisplayName"></span></h3>
+          <span id="userRole" style="font-size: 0.75rem; color: var(--text-muted);"></span>
         </div>
       </div>
       <div class="nav-btns">
-        <div class="theme-picker" role="group" aria-label="Pilih tema warna">
-          <button type="button" class="swatch swatch-onyx" data-theme-choice="onyx" title="Onyx" aria-pressed="false"></button>
-          <button type="button" class="swatch swatch-graphite" data-theme-choice="graphite" title="Graphite (gelap)" aria-pressed="false"></button>
-          <button type="button" class="swatch swatch-stone" data-theme-choice="stone" title="Stone" aria-pressed="false"></button>
-          <button type="button" class="swatch swatch-slate" data-theme-choice="slate" title="Slate" aria-pressed="false"></button>
+        <div class="theme-picker">
+          <button type="button" class="swatch swatch-onyx" data-theme-choice="onyx" title="Onyx"></button>
+          <button type="button" class="swatch swatch-graphite" data-theme-choice="graphite" title="Graphite"></button>
+          <button type="button" class="swatch swatch-stone" data-theme-choice="stone" title="Stone"></button>
+          <button type="button" class="swatch swatch-slate" data-theme-choice="slate" title="Slate"></button>
         </div>
         <button id="btnTambahUser" class="hidden btn-secondary btn-auto" onclick="showFormUser()">+ Akun Baru</button>
         <button id="btnTambahKwitansi" class="hidden btn-auto" onclick="showFormKwitansi()">+ Buat Kwitansi</button>
@@ -282,11 +247,9 @@
       </div>
     </div>
 
-    <!-- Tampilan Daftar Kwitansi -->
+    <!-- LIST -->
     <div id="listSection" class="no-print">
       <h4>Daftar Kwitansi Pembayaran</h4>
-      <p class="subtle" style="margin-bottom:16px;">Kelola dan cetak kwitansi yang sudah tersimpan.</p>
-
       <div class="toolbar">
         <div class="form-group">
           <label>Tipe Kwitansi</label>
@@ -299,34 +262,28 @@
       <div id="kwitansiListTable"></div>
     </div>
 
-    <!-- Form Buat Akun Baru -->
+    <!-- FORM USER -->
     <div id="formUserSection" class="hidden no-print">
       <h4>Buat Akun Baru</h4>
-      <p class="subtle" style="margin-bottom:16px;">Tambahkan pengguna admin atau client baru.</p>
       <div class="form-grid">
         <div class="form-group"><label>Username</label><input type="text" id="newUsername"></div>
         <div class="form-group"><label>Password</label><input type="password" id="newPassword"></div>
         <div class="form-group">
           <label>Role</label>
-          <select id="newRole">
-            <option value="client">Client</option>
-            <option value="admin">Admin</option>
-          </select>
+          <select id="newRole"><option value="client">Client</option><option value="admin">Admin</option></select>
         </div>
         <div class="form-group"><label>Nama Lengkap</label><input type="text" id="newName"></div>
       </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button id="btnSimpanUser" class="btn-success btn-auto" onclick="simpanUser()">
-          <span id="btnSimpanUserText">Simpan Akun</span>
-        </button>
+      <div style="display:flex; gap:8px;">
+        <button id="btnSimpanUser" class="btn-success btn-auto" onclick="simpanUser()"><span id="btnSimpanUserText">Simpan Akun</span></button>
         <button class="btn-secondary btn-auto" onclick="hideForms()">Batal</button>
       </div>
     </div>
 
-    <!-- Form Input Kwitansi -->
+    <!-- FORM INPUT KWITANSI -->
     <div id="formKwitansiSection" class="hidden no-print">
-      <h4 id="formKwitansiTitle">Tambah Kwitansi Baru</h4>
-      <p class="subtle" style="margin-bottom:16px;">Isi rincian transaksi, kalkulasi akan terisi otomatis.</p>
+      <h4>Tambah Kwitansi Baru</h4>
+      <p class="subtle" style="margin-bottom:16px;">Semua input manual. Terbilang dihitung otomatis dari Total Keuntungan / Jumlah.</p>
 
       <div class="form-group" style="max-width:260px;">
         <label>Tipe Kwitansi</label>
@@ -344,51 +301,48 @@
 
       <div class="form-grid">
         <div class="form-group"><label>Terima Dari</label><input type="text" id="fieldTerimaDari"></div>
-        <div class="form-group"><label>Modal (Rp)</label><input type="number" step="0.01" id="fieldModal" oninput="hitungOtomatis(event)"></div>
+        <div class="form-group"><label>Modal (Rp)</label><input type="number" step="0.01" id="fieldModal"></div>
       </div>
 
-      <!-- Field Khusus Lebur -->
+      <!-- Field Lebur -->
       <div id="fieldsLebur">
         <div class="form-grid">
-          <div class="form-group"><label>Harga Beli 1 / gr (Rp)</label><input type="number" step="0.01" id="fieldHargaBeli1Gr" oninput="hitungOtomatis(event)"></div>
+          <div class="form-group"><label>Harga Beli 1 / gr (Rp)</label><input type="number" step="0.01" id="fieldHargaBeli1Gr"></div>
           <div class="form-group"><label>Total Sebelum Lebur</label><input type="number" step="0.01" id="fieldTotalSebelumLebur"></div>
-          <div class="form-group"><label>Total Setelah Lebur</label><input type="number" step="0.01" id="fieldTotalSetelahLebur" oninput="hitungOtomatis(event)"></div>
+          <div class="form-group"><label>Total Setelah Lebur</label><input type="number" step="0.01" id="fieldTotalSetelahLebur"></div>
           <div class="form-group"><label>Kadar (%)</label><input type="text" id="fieldKadar" value="91.99%"></div>
         </div>
       </div>
 
-      <!-- Field Khusus Tak Lebur -->
+      <!-- Field Tak Lebur -->
       <div id="fieldsTakLebur" class="hidden">
         <div class="form-grid">
-          <div class="form-group"><label>Harga Beli / gram (Rp)</label><input type="number" step="0.01" id="fieldHargaBeliGram" oninput="hitungOtomatis(event)"></div>
-          <div class="form-group"><label>Harga Jual / gram (Rp)</label><input type="number" step="0.01" id="fieldHargaJualGram" oninput="hitungOtomatis(event)"></div>
+          <div class="form-group"><label>Harga Beli / gram (Rp)</label><input type="number" step="0.01" id="fieldHargaBeliGram"></div>
+          <div class="form-group"><label>Harga Jual / gram (Rp)</label><input type="number" step="0.01" id="fieldHargaJualGram"></div>
         </div>
       </div>
 
-      <!-- Field Hasil Kalkulasi -->
       <div class="form-grid">
-        <div class="form-group"><label>Total Penjualan (Rp)</label><input type="number" step="0.01" id="fieldTotalPenjualan" oninput="hitungOtomatis(event)"></div>
-        <div class="form-group"><label>Total Keuntungan (Rp)</label><input type="number" step="0.01" id="fieldTotalKeuntungan" oninput="hitungManualKeuntungan()" placeholder="0"></div>
-        <div class="form-group"><label>Total Keuntungan x 30% (Jumlah)</label><input type="number" step="0.01" id="fieldJumlah" readonly></div>
+        <div class="form-group"><label>Total Penjualan (Rp)</label><input type="number" step="0.01" id="fieldTotalPenjualan"></div>
+        <div class="form-group"><label>Total Keuntungan (Rp)</label><input type="number" step="0.01" id="fieldTotalKeuntungan" oninput="updateTerbilangDanJumlah()"></div>
+        <div class="form-group"><label>Total Keuntungan x 30% (Jumlah)</label><input type="number" step="0.01" id="fieldJumlah" oninput="updateTerbilangSaja()"></div>
       </div>
 
       <!-- Terbilang Otomatis -->
       <div class="form-group">
-        <label>Terbilang (Otomatis dari Total Keuntungan)</label>
-        <input type="text" id="fieldTerbilang" readonly style="font-weight:600;">
+        <label>Terbilang (Otomatis dari Jumlah 30%)</label>
+        <input type="text" id="fieldTerbilang" readonly style="font-weight:600; background:var(--surface-2);">
       </div>
 
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <button id="btnSimpanKwitansi" class="btn-success btn-auto" onclick="simpanKwitansi()">
-          <span id="btnSimpanKwitansiText">Simpan Kwitansi</span>
-        </button>
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <button id="btnSimpanKwitansi" class="btn-success btn-auto" onclick="simpanKwitansi()"><span id="btnSimpanKwitansiText">Simpan Kwitansi</span></button>
         <button class="btn-secondary btn-auto" onclick="hideForms()">Batal</button>
       </div>
     </div>
 
-    <!-- PREVIEW KWITANSI -->
+    <!-- PREVIEW -->
     <div id="previewArea" class="hidden">
-      <div class="preview-actions no-print">
+      <div class="preview-actions no-print" style="margin-bottom:16px; display:flex; gap:8px;">
         <button class="btn-success btn-auto" onclick="window.print()">Cetak / Download PDF</button>
         <button class="btn-secondary btn-auto" onclick="closePreview()">Kembali</button>
       </div>
@@ -419,19 +373,12 @@
           </tr>
         </table>
 
-        <!-- Tabel Perhitungan -->
         <table class="kwitansi-table" id="viewDetailTable"></table>
 
         <div class="signature-container">
-          <div class="sig-box" style="flex: 2 1 220px; text-align:left;">
-            <strong>Detail Jumlah dan Perhitungan</strong>
-          </div>
-          <div class="sig-box">
-            <strong>Tanda Tangan Penerima</strong>
-          </div>
-          <div class="sig-box">
-            <strong>Tanda Tangan Penyetor</strong>
-          </div>
+          <div class="sig-box" style="flex: 2 1 220px; text-align:left;"><strong>Detail Jumlah dan Perhitungan</strong></div>
+          <div class="sig-box"><strong>Tanda Tangan Penerima</strong></div>
+          <div class="sig-box"><strong>Tanda Tangan Penyetor</strong></div>
         </div>
       </div>
     </div>
@@ -441,12 +388,9 @@
 </div>
 
 <script>
-  // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9GG3gBZ4VMl-e2Hu1_Qv3UtREHo_DA6vSNfeqBpv2RDfMTVq-NjoJUmWT4LGvK2Az/exec";
-
   let currentUser = null;
 
-  // --- THEME PICKER (monokrom) ---
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     try { localStorage.setItem('kwitansi_theme', theme); } catch (e) {}
@@ -462,7 +406,6 @@
     });
   });
 
-  // --- HELPER LOADING ANIMASI ---
   function setButtonLoading(btnId, textId, isLoading, originalText) {
     const btn = document.getElementById(btnId);
     const txt = document.getElementById(textId);
@@ -484,7 +427,7 @@
     document.getElementById('globalLoading').classList.add('hidden');
   }
 
-  // --- FUNGSI TERBILANG DENGAN DUKUNGAN PENUH (Triliun - Perak/Sen & Minus) ---
+  /* FUNGSI TERBILANG DENGAN SANGAT AKURAT (Mendukung Minus) */
   function terbilangAngkaDasar(angka) {
     var bil = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
     angka = Math.floor(angka);
@@ -507,7 +450,6 @@
   function konversiTerbilangLengkap(nilai) {
     if (!nilai || nilai === 0) return "Nol Rupiah.";
 
-    // Penanganan Angka Minus
     let awalan = "";
     if (nilai < 0) {
       awalan = "Minus ";
@@ -527,7 +469,24 @@
     return hasil.replace(/\s+/g, ' ').trim();
   }
 
-  // --- LOGIN & LOGOUT ---
+  /* LOGIKA EDIT MANUAL & OTOMATISASI TERBILANG */
+  function updateTerbilangDanJumlah() {
+    const totalKeuntungan = parseFloat(document.getElementById('fieldTotalKeuntungan').value) || 0;
+    
+    // Hitung 30% dari Total Keuntungan yang diinput manual
+    const jumlah30 = totalKeuntungan * 0.30;
+    document.getElementById('fieldJumlah').value = jumlah30 ? jumlah30.toFixed(2) : 0;
+    
+    // Jalankan Terbilang dari nilai 30% tersebut
+    document.getElementById('fieldTerbilang').value = konversiTerbilangLengkap(jumlah30);
+  }
+
+  function updateTerbilangSaja() {
+    const jumlah = parseFloat(document.getElementById('fieldJumlah').value) || 0;
+    document.getElementById('fieldTerbilang').value = konversiTerbilangLengkap(jumlah);
+  }
+
+  /* LOGIN & LOGOUT */
   async function handleLogin() {
     const u = document.getElementById('loginUsername').value;
     const p = document.getElementById('loginPassword').value;
@@ -544,7 +503,7 @@
       if (user) {
         currentUser = user;
         document.getElementById('userDisplayName').innerText = user.name;
-        document.getElementById('userRole').innerText = user.role;
+        document.getElementById('userRole').innerText = user.role.toUpperCase();
 
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
@@ -559,7 +518,7 @@
         alert("Username atau Password salah!");
       }
     } catch(err) {
-      alert("Gagal terhubung ke Google Apps Script. Pastikan URL Web App sudah dikonfigurasi dengan benar.");
+      alert("Gagal terhubung ke server.");
     } finally {
       setButtonLoading('btnLogin', 'btnLoginText', false, 'Login');
     }
@@ -587,7 +546,6 @@
     document.getElementById('formKwitansiSection').classList.remove('hidden');
   }
 
-  // --- KALKULASI & FORM HANDLER ---
   function toggleFormFields() {
     const type = document.getElementById('inputType').value;
     if(type === 'lebur') {
@@ -597,87 +555,19 @@
       document.getElementById('fieldsLebur').classList.add('hidden');
       document.getElementById('fieldsTakLebur').classList.remove('hidden');
     }
-    hitungOtomatis();
-  }
-
-  // 1. Fungsi khusus saat kamu mengedit secara MANUAL di kolom Total Keuntungan
-  function hitungManualKeuntungan() {
-    const elKeuntungan = document.getElementById('fieldTotalKeuntungan');
-    if (!elKeuntungan) return;
-
-    let valStr = elKeuntungan.value.toString().replace(/,/g, '.');
-    const totalKeuntungan = parseFloat(valStr) || 0;
-
-    // Hitung 30% dari Total Keuntungan
-    const jumlah30 = totalKeuntungan * 0.30;
-
-    // Update field Jumlah (30%) dan Terbilang secara realtime
-    const elJumlah = document.getElementById('fieldJumlah');
-    if (elJumlah) {
-      elJumlah.value = jumlah30 !== 0 ? jumlah30.toFixed(2) : '0';
-    }
-
-    const elTerbilang = document.getElementById('fieldTerbilang');
-    if (elTerbilang) {
-      elTerbilang.value = konversiTerbilangLengkap(jumlah30);
-    }
-  }
-
-  // 2. Fungsi hitung otomatis dari input lain
-  function hitungOtomatis(e) {
-    // Jika event terjadi dari pengetikan kolom Total Keuntungan, jalankan fungsi manual
-    if (e && e.target && e.target.id === 'fieldTotalKeuntungan') {
-      hitungManualKeuntungan();
-      return;
-    }
-
-    const type = document.getElementById('inputType').value;
-    let totalPenjualan = parseFloat(document.getElementById('fieldTotalPenjualan').value) || 0;
-    const modal = parseFloat(document.getElementById('fieldModal').value) || 0;
-    let totalKeuntungan = 0;
-
-    if (type === 'lebur') {
-      // Keuntungan = Penjualan - Modal
-      if (totalPenjualan > 0 && modal > 0) {
-        totalKeuntungan = totalPenjualan - modal;
-        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-      } else if (totalPenjualan > 0 && modal === 0) {
-        const hargaBeli1Gr = parseFloat(document.getElementById('fieldHargaBeli1Gr').value) || 0;
-        const totalSetelahLebur = parseFloat(document.getElementById('fieldTotalSetelahLebur').value) || 0;
-        const hargaBeliEst = totalSetelahLebur * hargaBeli1Gr;
-
-        totalKeuntungan = totalPenjualan - hargaBeliEst;
-        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-      }
-    } else {
-      const hargaBeliGram = parseFloat(document.getElementById('fieldHargaBeliGram').value) || 0;
-      const hargaJualGram = parseFloat(document.getElementById('fieldHargaJualGram').value) || 0;
-
-      if (modal > 0 && hargaBeliGram > 0 && hargaJualGram > 0) {
-        let totalPembelianGr = modal / hargaBeliGram;
-        totalPenjualan = totalPembelianGr * hargaJualGram;
-        document.getElementById('fieldTotalPenjualan').value = totalPenjualan.toFixed(2);
-        
-        totalKeuntungan = totalPenjualan - modal;
-        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-      }
-    }
-
-    // Jalankan update hasil 30% dan terbilang
-    hitungManualKeuntungan();
   }
 
   function formatRupiah(val) {
     return "Rp" + new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(val || 0);
   }
 
-  // --- APPS SCRIPT DATABASE CRUD ---
+  /* DATABASE LOAD & SAVE */
   async function loadKwitansiData() {
     const type = document.getElementById('filterType').value;
     const action = type === 'lebur' ? 'getKwitansiLebur' : 'getKwitansiTakLebur';
     const container = document.getElementById('kwitansiListTable');
 
-    showGlobalLoading("Memuat daftar kwitansi...");
+    showGlobalLoading("Memuat data...");
 
     try {
       const res = await fetch(`${SCRIPT_URL}?action=${action}`);
@@ -695,15 +585,15 @@
         </thead><tbody>`;
 
       if(data.length === 0) {
-        html += `<tr><td colspan="5"><div class="empty-state">Belum ada data kwitansi.</div></td></tr>`;
+        html += `<tr><td colspan="5" style="text-align:center; padding:20px;">Belum ada data kwitansi.</td></tr>`;
       } else {
         data.forEach(row => {
           html += `<tr>
-            <td data-label="No">${row.no || '-'}</td>
-            <td data-label="Terima Dari">${row.terima_dari || '-'}</td>
-            <td data-label="Jumlah (30%)" class="num">${formatRupiah(row.jumlah)}</td>
-            <td data-label="Total Keuntungan" class="num">${formatRupiah(row.total_keuntungan)}</td>
-            <td data-label="Aksi" class="row-actions-cell">
+            <td>${row.no || '-'}</td>
+            <td>${row.terima_dari || '-'}</td>
+            <td class="num">${formatRupiah(row.jumlah)}</td>
+            <td class="num">${formatRupiah(row.total_keuntungan)}</td>
+            <td>
               <div class="row-actions">
                 <button class="btn-secondary btn-sm" onclick='viewKwitansi(${JSON.stringify(row)}, "${type}")'>Cetak / Lihat</button>
                 ${currentUser.role === 'admin' ? `<button class="btn-danger btn-sm" onclick='hapusKwitansi("${row.id}", "${type}")'>Hapus</button>` : ''}
@@ -716,7 +606,7 @@
       html += `</tbody></table></div>`;
       container.innerHTML = html;
     } catch(err) {
-      container.innerHTML = "<p style='color:var(--danger);'>Gagal memuat data dari database.</p>";
+      container.innerHTML = "<p style='color:var(--danger);'>Gagal memuat data.</p>";
     } finally {
       hideGlobalLoading();
     }
@@ -732,6 +622,9 @@
     const id = "KWT-" + Date.now();
 
     if(type === 'lebur') {
+      const hb1gr = parseFloat(document.getElementById('fieldHargaBeli1Gr').value) || 0;
+      const tsl = parseFloat(document.getElementById('fieldTotalSetelahLebur').value) || 0;
+
       rowData = [
         id,
         document.getElementById('fieldNo').value,
@@ -741,11 +634,11 @@
         document.getElementById('fieldJumlah').value,
         document.getElementById('fieldTerbilang').value,
         document.getElementById('fieldModal').value,
-        document.getElementById('fieldHargaBeli1Gr').value,
+        hb1gr,
         document.getElementById('fieldTotalSebelumLebur').value,
-        document.getElementById('fieldTotalSetelahLebur').value,
+        tsl,
         document.getElementById('fieldKadar').value,
-        (parseFloat(document.getElementById('fieldTotalSetelahLebur').value)||0) * (parseFloat(document.getElementById('fieldHargaBeli1Gr').value)||0),
+        (hb1gr * tsl).toFixed(2),
         document.getElementById('fieldTotalPenjualan').value,
         document.getElementById('fieldTotalKeuntungan').value,
         document.getElementById('fieldJumlah').value
@@ -783,7 +676,7 @@
       hideForms();
       await loadKwitansiData();
     } catch(err) {
-      alert("Gagal menyimpan kwitansi: " + err.toString());
+      alert("Gagal menyimpan kwitansi.");
     } finally {
       setButtonLoading('btnSimpanKwitansi', 'btnSimpanKwitansiText', false, 'Simpan Kwitansi');
     }
@@ -793,7 +686,7 @@
     if(!confirm("Yakin ingin menghapus kwitansi ini?")) return;
     const sheetName = type === 'lebur' ? 'KwitansiLebur' : 'KwitansiTakLebur';
 
-    showGlobalLoading("Menghapus data...");
+    showGlobalLoading("Menghapus...");
 
     try {
       await fetch(SCRIPT_URL, {
@@ -804,7 +697,7 @@
       alert("Data berhasil dihapus!");
       await loadKwitansiData();
     } catch(err) {
-      alert("Gagal menghapus data!");
+      alert("Gagal menghapus data.");
     } finally {
       hideGlobalLoading();
     }
@@ -816,28 +709,25 @@
     const r = document.getElementById('newRole').value;
     const n = document.getElementById('newName').value;
 
-    if(!u || !p || !n) return alert("Mohon lengkapi semua field user!");
+    if(!u || !p || !n) return alert("Lengkapi semua field!");
 
     setButtonLoading('btnSimpanUser', 'btnSimpanUserText', true, 'Simpan Akun');
-
-    const row = [u, p, r, n];
 
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "create", sheet: "Users", row: row })
+        body: JSON.stringify({ action: "create", sheet: "Users", row: [u, p, r, n] })
       });
 
       alert("User baru berhasil ditambahkan!");
       hideForms();
     } catch(err) {
-      alert("Gagal menyimpan user!");
+      alert("Gagal menyimpan user.");
     } finally {
       setButtonLoading('btnSimpanUser', 'btnSimpanUserText', false, 'Simpan Akun');
     }
   }
 
-  // --- PREVIEW & CETAK ---
   function viewKwitansi(data, type) {
     document.getElementById('listSection').classList.add('hidden');
     document.getElementById('previewArea').classList.remove('hidden');
