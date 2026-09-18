@@ -484,42 +484,48 @@
     document.getElementById('globalLoading').classList.add('hidden');
   }
 
-  // --- FUNGSI TERBILANG DENGAN DUKUNGAN PENUH (Triliun - Perak/Sen) ---
-function terbilangAngkaDasar(angka) {
-  var bil = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-  angka = Math.floor(angka);
+  // --- FUNGSI TERBILANG DENGAN DUKUNGAN PENUH (Triliun - Perak/Sen & Minus) ---
+  function terbilangAngkaDasar(angka) {
+    var bil = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+    angka = Math.floor(angka);
 
-  if (angka === 0) return "";
-  if (angka < 12) return " " + bil[angka];
-  else if (angka < 20) return terbilangAngkaDasar(angka - 10) + " Belas";
-  else if (angka < 100) return terbilangAngkaDasar(Math.floor(angka / 10)) + " Puluh" + terbilangAngkaDasar(angka % 10);
-  else if (angka < 200) return " Seratus" + terbilangAngkaDasar(angka - 100);
-  else if (angka < 1000) return terbilangAngkaDasar(Math.floor(angka / 100)) + " Ratus" + terbilangAngkaDasar(angka % 100);
-  else if (angka < 2000) return " Seribu" + terbilangAngkaDasar(angka - 1000);
-  else if (angka < 1000000) return terbilangAngkaDasar(Math.floor(angka / 1000)) + " Ribu" + terbilangAngkaDasar(angka % 1000);
-  else if (angka < 1000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000)) + " Juta" + terbilangAngkaDasar(angka % 1000000);
-  else if (angka < 1000000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000000)) + " Milyar" + terbilangAngkaDasar(angka % 1000000000);
-  else if (angka < 1000000000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000000000)) + " Triliun" + terbilangAngkaDasar(angka % 1000000000000);
+    if (angka === 0) return "";
+    if (angka < 12) return " " + bil[angka];
+    else if (angka < 20) return terbilangAngkaDasar(angka - 10) + " Belas";
+    else if (angka < 100) return terbilangAngkaDasar(Math.floor(angka / 10)) + " Puluh" + terbilangAngkaDasar(angka % 10);
+    else if (angka < 200) return " Seratus" + terbilangAngkaDasar(angka - 100);
+    else if (angka < 1000) return terbilangAngkaDasar(Math.floor(angka / 100)) + " Ratus" + terbilangAngkaDasar(angka % 100);
+    else if (angka < 2000) return " Seribu" + terbilangAngkaDasar(angka - 1000);
+    else if (angka < 1000000) return terbilangAngkaDasar(Math.floor(angka / 1000)) + " Ribu" + terbilangAngkaDasar(angka % 1000);
+    else if (angka < 1000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000)) + " Juta" + terbilangAngkaDasar(angka % 1000000);
+    else if (angka < 1000000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000000)) + " Milyar" + terbilangAngkaDasar(angka % 1000000000);
+    else if (angka < 1000000000000000) return terbilangAngkaDasar(Math.floor(angka / 1000000000000)) + " Triliun" + terbilangAngkaDasar(angka % 1000000000000);
 
-  return "";
-}
-
-function konversiTerbilangLengkap(nilai) {
-  if (!nilai || nilai === 0) return "Nol Rupiah.";
-
-  var bagianUtama = Math.floor(Math.abs(nilai));
-  var bagianDesimal = Math.round((Math.abs(nilai) - bagianUtama) * 100);
-
-  var hasil = terbilangAngkaDasar(bagianUtama).trim() + " Rupiah";
-
-  if (bagianDesimal > 0) {
-    hasil += " " + terbilangAngkaDasar(bagianDesimal).trim() + " Perak";
-  } else {
-    hasil += ".";
+    return "";
   }
 
-  return hasil.replace(/\s+/g, ' ').trim();
-}
+  function konversiTerbilangLengkap(nilai) {
+    if (!nilai || nilai === 0) return "Nol Rupiah.";
+
+    // Penanganan Angka Minus
+    let awalan = "";
+    if (nilai < 0) {
+      awalan = "Minus ";
+    }
+
+    var bagianUtama = Math.floor(Math.abs(nilai));
+    var bagianDesimal = Math.round((Math.abs(nilai) - bagianUtama) * 100);
+
+    var hasil = awalan + terbilangAngkaDasar(bagianUtama).trim() + " Rupiah";
+
+    if (bagianDesimal > 0) {
+      hasil += " " + terbilangAngkaDasar(bagianDesimal).trim() + " Perak";
+    } else {
+      hasil += ".";
+    }
+
+    return hasil.replace(/\s+/g, ' ').trim();
+  }
 
   // --- LOGIN & LOGOUT ---
   async function handleLogin() {
@@ -617,50 +623,46 @@ function konversiTerbilangLengkap(nilai) {
     }
   }
 
-// 2. Fungsi hitung otomatis dari input lain
-function hitungOtomatis(e) {
-  // Jika event terjadi dari pengetikan kolom Total Keuntungan, jalankan fungsi manual
-  if (e && e.target && e.target.id === 'fieldTotalKeuntungan') {
-    hitungManualKeuntungan();
-    return;
-  }
-
-  const type = document.getElementById('inputType').value;
-  let totalPenjualan = parseFloat(document.getElementById('fieldTotalPenjualan').value) || 0;
-  const modal = parseFloat(document.getElementById('fieldModal').value) || 0;
-  let totalKeuntungan = 0;
-
-  if (type === 'lebur') {
-    // Untuk tipe lebur: Keuntungan = Total Penjualan - Modal
-    if (totalPenjualan > 0 && modal > 0) {
-      totalKeuntungan = totalPenjualan - modal;
-      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-    } else if (totalPenjualan > 0 && modal === 0) {
-      // Jika modal belum diisi, alternatif mengalikan berat lebur x harga beli per gram
-      const hargaBeli1Gr = parseFloat(document.getElementById('fieldHargaBeli1Gr').value) || 0;
-      const totalSetelahLebur = parseFloat(document.getElementById('fieldTotalSetelahLebur').value) || 0;
-      const hargaBeliEst = totalSetelahLebur * hargaBeli1Gr;
-      
-      totalKeuntungan = totalPenjualan - hargaBeliEst;
-      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+  // 2. Fungsi hitung otomatis dari input lain
+  function hitungOtomatis(e) {
+    // Jika event terjadi dari pengetikan kolom Total Keuntungan, jalankan fungsi manual
+    if (e && e.target && e.target.id === 'fieldTotalKeuntungan') {
+      hitungManualKeuntungan();
+      return;
     }
-  } else {
-    const hargaBeliGram = parseFloat(document.getElementById('fieldHargaBeliGram').value) || 0;
-    const hargaJualGram = parseFloat(document.getElementById('fieldHargaJualGram').value) || 0;
 
-    if (modal > 0 && hargaBeliGram > 0 && hargaJualGram > 0) {
-      let totalPembelianGr = modal / hargaBeliGram;
-      totalPenjualan = totalPembelianGr * hargaJualGram;
-      document.getElementById('fieldTotalPenjualan').value = totalPenjualan.toFixed(2);
-      
-      totalKeuntungan = totalPenjualan - modal;
-      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+    const type = document.getElementById('inputType').value;
+    let totalPenjualan = parseFloat(document.getElementById('fieldTotalPenjualan').value) || 0;
+    const modal = parseFloat(document.getElementById('fieldModal').value) || 0;
+    let totalKeuntungan = 0;
+
+    if (type === 'lebur') {
+      // Keuntungan = Penjualan - Modal
+      if (totalPenjualan > 0 && modal > 0) {
+        totalKeuntungan = totalPenjualan - modal;
+        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+      } else if (totalPenjualan > 0 && modal === 0) {
+        const hargaBeli1Gr = parseFloat(document.getElementById('fieldHargaBeli1Gr').value) || 0;
+        const totalSetelahLebur = parseFloat(document.getElementById('fieldTotalSetelahLebur').value) || 0;
+        const hargaBeliEst = totalSetelahLebur * hargaBeli1Gr;
+
+        totalKeuntungan = totalPenjualan - hargaBeliEst;
+        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+      }
+    } else {
+      const hargaBeliGram = parseFloat(document.getElementById('fieldHargaBeliGram').value) || 0;
+      const hargaJualGram = parseFloat(document.getElementById('fieldHargaJualGram').value) || 0;
+
+      if (modal > 0 && hargaBeliGram > 0 && hargaJualGram > 0) {
+        let totalPembelianGr = modal / hargaBeliGram;
+        totalPenjualan = totalPembelianGr * hargaJualGram;
+        document.getElementById('fieldTotalPenjualan').value = totalPenjualan.toFixed(2);
+        
+        totalKeuntungan = totalPenjualan - modal;
+        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+      }
     }
-  }
 
-  // Jalankan update hasil 30% dan terbilang
-  hitungManualKeuntungan();
-}
     // Jalankan update hasil 30% dan terbilang
     hitungManualKeuntungan();
   }
