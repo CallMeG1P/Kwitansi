@@ -617,41 +617,50 @@ function konversiTerbilangLengkap(nilai) {
     }
   }
 
-  // 2. Fungsi hitung otomatis dari input lain
-  function hitungOtomatis(e) {
-    // Jika event terjadi dari pengetikan kolom Total Keuntungan, jalankan fungsi manual
-    if (e && e.target && e.target.id === 'fieldTotalKeuntungan') {
-      hitungManualKeuntungan();
-      return;
-    }
+// 2. Fungsi hitung otomatis dari input lain
+function hitungOtomatis(e) {
+  // Jika event terjadi dari pengetikan kolom Total Keuntungan, jalankan fungsi manual
+  if (e && e.target && e.target.id === 'fieldTotalKeuntungan') {
+    hitungManualKeuntungan();
+    return;
+  }
 
-    const type = document.getElementById('inputType').value;
-    let totalPenjualan = parseFloat(document.getElementById('fieldTotalPenjualan').value) || 0;
-    let totalKeuntungan = 0;
+  const type = document.getElementById('inputType').value;
+  let totalPenjualan = parseFloat(document.getElementById('fieldTotalPenjualan').value) || 0;
+  const modal = parseFloat(document.getElementById('fieldModal').value) || 0;
+  let totalKeuntungan = 0;
 
-    if (type === 'lebur') {
+  if (type === 'lebur') {
+    // Untuk tipe lebur: Keuntungan = Total Penjualan - Modal
+    if (totalPenjualan > 0 && modal > 0) {
+      totalKeuntungan = totalPenjualan - modal;
+      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+    } else if (totalPenjualan > 0 && modal === 0) {
+      // Jika modal belum diisi, alternatif mengalikan berat lebur x harga beli per gram
       const hargaBeli1Gr = parseFloat(document.getElementById('fieldHargaBeli1Gr').value) || 0;
       const totalSetelahLebur = parseFloat(document.getElementById('fieldTotalSetelahLebur').value) || 0;
-
-      if (totalPenjualan > 0) {
-        let hargaBeliEst = totalSetelahLebur * hargaBeli1Gr;
-        totalKeuntungan = totalPenjualan - hargaBeliEst;
-        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-      }
-    } else {
-      const modal = parseFloat(document.getElementById('fieldModal').value) || 0;
-      const hargaBeliGram = parseFloat(document.getElementById('fieldHargaBeliGram').value) || 0;
-      const hargaJualGram = parseFloat(document.getElementById('fieldHargaJualGram').value) || 0;
-
-      if (modal > 0 && hargaBeliGram > 0 && hargaJualGram > 0) {
-        let totalPembelianGr = modal / hargaBeliGram;
-        totalPenjualan = totalPembelianGr * hargaJualGram;
-        document.getElementById('fieldTotalPenjualan').value = totalPenjualan.toFixed(2);
-        totalKeuntungan = totalPenjualan - modal;
-        document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
-      }
+      const hargaBeliEst = totalSetelahLebur * hargaBeli1Gr;
+      
+      totalKeuntungan = totalPenjualan - hargaBeliEst;
+      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
     }
+  } else {
+    const hargaBeliGram = parseFloat(document.getElementById('fieldHargaBeliGram').value) || 0;
+    const hargaJualGram = parseFloat(document.getElementById('fieldHargaJualGram').value) || 0;
 
+    if (modal > 0 && hargaBeliGram > 0 && hargaJualGram > 0) {
+      let totalPembelianGr = modal / hargaBeliGram;
+      totalPenjualan = totalPembelianGr * hargaJualGram;
+      document.getElementById('fieldTotalPenjualan').value = totalPenjualan.toFixed(2);
+      
+      totalKeuntungan = totalPenjualan - modal;
+      document.getElementById('fieldTotalKeuntungan').value = totalKeuntungan.toFixed(2);
+    }
+  }
+
+  // Jalankan update hasil 30% dan terbilang
+  hitungManualKeuntungan();
+}
     // Jalankan update hasil 30% dan terbilang
     hitungManualKeuntungan();
   }
