@@ -21,6 +21,9 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   const [previewType, setPreviewType] = useState<KwitansiType>('lebur');
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // Normalisasi pengecekan role agar aman dari kapitalisasi (misal: 'CLIENT', 'Client', 'client')
+  const isAdmin = user?.role?.toString().toLowerCase() === 'admin';
+
   function showList() {
     setView('list');
     setPreviewData(null);
@@ -63,14 +66,19 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
 
           <div className="flex gap-2.5 flex-wrap items-center">
             <ThemePicker />
-            {user.role === 'admin' && (
-              <Button variant="secondary" size="auto" onClick={() => setView('formUser')}>
-                <UserPlus size={15} /> Akun Baru
-              </Button>
+            
+            {/* Hanya render tombol Akun Baru DAN Buat Kwitansi jika user adalah Admin */}
+            {isAdmin && (
+              <>
+                <Button variant="secondary" size="auto" onClick={() => setView('formUser')}>
+                  <UserPlus size={15} /> Akun Baru
+                </Button>
+                <Button variant="primary" size="auto" onClick={() => setView('formKwitansi')}>
+                  <Plus size={15} /> Buat Kwitansi
+                </Button>
+              </>
             )}
-            <Button variant="primary" size="auto" onClick={() => setView('formKwitansi')}>
-              <Plus size={15} /> Buat Kwitansi
-            </Button>
+
             <Button variant="danger" size="auto" onClick={onLogout}>
               <LogOut size={15} /> Logout
             </Button>
@@ -81,10 +89,12 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         {view === 'list' && (
           <ReceiptList user={user} onView={handleView} refreshKey={refreshKey} />
         )}
-        {view === 'formKwitansi' && (
+        
+        {/* Proteksi keamanan tambahan pada render view */}
+        {view === 'formKwitansi' && isAdmin && (
           <ReceiptForm onSaved={handleSaved} onCancel={showList} />
         )}
-        {view === 'formUser' && (
+        {view === 'formUser' && isAdmin && (
           <UserForm onSaved={showList} onCancel={showList} />
         )}
         {view === 'preview' && previewData && (
